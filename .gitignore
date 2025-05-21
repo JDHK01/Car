@@ -1,0 +1,39 @@
+# Python 缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv/
+.ipynb_checkpoints/
+
+# pip 缓存
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook 检查点
+.ipynb_checkpoints
+
+# PyCharm 配置
+.idea/
+
+# VSCode 配置
+.vscode/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 临时文件
+*.swp
+*.swo
+
+# 图片和视频
+picture/
+video/

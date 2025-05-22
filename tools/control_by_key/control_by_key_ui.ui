@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CarController</class>
+ <widget class="QWidget" name="CarController">
+  <property name="windowTitle">
+   <string>小车遥控器</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <!-- 移动速度 -->
+   <item>
+    <layout class="QHBoxLayout" name="moveSpeedLayout">
+     <item>
+      <widget class="QLabel" name="move_speed_label">
+       <property name="text">
+        <string>移动速度:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="move_speed_slider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="move_speed_box">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- 旋转速度 -->
+   <item>
+    <layout class="QHBoxLayout" name="rotateSpeedLayout">
+     <item>
+      <widget class="QLabel" name="rotate_speed_label">
+       <property name="text">
+        <string>旋转速度:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="rotate_speed_slider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="rotate_speed_box">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- 状态标签 -->
+   <item>
+    <widget class="QLabel" name="status_label">
+     <property name="text">
+      <string>x: 0    y: 0    angle: 0</string>
+     </property>
+    </widget>
+   </item>
+
+   <!-- 说明 -->
+   <item>
+    <widget class="QLabel" name="instructions_label">
+     <property name="text">
+      <string>使用键盘控制：&#10;W：左移 | S：右移&#10;J：前进 | K：后退&#10;A：左转 | D：右转</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

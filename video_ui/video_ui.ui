@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VideoUI</class>
+ <widget class="QWidget" name="VideoUI">
+  <property name="windowTitle">
+   <string>通用视频处理</string>
+  </property>
+  <layout class="QVBoxLayout" name="vbox_main">
+   <item>
+    <layout class="QVBoxLayout" name="vbox_ctrl">
+     <item>
+      <layout class="QHBoxLayout" name="hbox_btn0">
+       <item><widget class="QPushButton" name="btn_open"><property name="text"><string>打开视频</string></property></widget></item>
+       <item><widget class="QPushButton" name="btn_camera"><property name="text"><string>摄像头</string></property></widget></item>
+       <item><widget class="QPushButton" name="btn_play"/></item>
+       <item><widget class="QPushButton" name="btn_pause"/></item>
+       <item><widget class="QPushButton" name="btn_close"><property name="text"><string>关闭</string></property></widget></item>
+       <item><widget class="QPushButton" name="btn_exit"><property name="text"><string>退出</string></property></widget></item>
+       <item><widget class="QLabel" name="label_display"><property name="text"><string>显示:</string></property></widget></item>
+       <item>
+        <widget class="QComboBox" name="combo_img">
+         <item><property name="text"><string>frame</string></property></item>
+         <item><property name="text"><string>processed</string></property></item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="hbox_btn1">
+       <item><widget class="QPushButton" name="btn_snapshot"><property name="text"><string>截图</string></property></widget></item>
+       <item><widget class="QPushButton" name="btn_record"><property name="text"><string>录制</string></property></widget></item>
+       <item><widget class="QPushButton" name="btn_stoprec"><property name="text"><string>停止录制</string></property></widget></item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="hbox_fps">
+       <item><widget class="QLabel" name="label_fps"><property name="text"><string>帧率:</string></property></widget></item>
+       <item><widget class="QSlider" name="slider_fps"><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QSpinBox" name="spin_fps"/></item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hbox_picture">
+     <item><widget class="QLabel" name="label_single0"><property name="minimumSize"><size><width>640</width><height>480</height></size></property><property name="styleSheet"><string>background: #222;</string></property></widget></item>
+     <item><widget class="QLabel" name="label_single"><property name="minimumSize"><size><width>640</width><height>480</height></size></property><property name="styleSheet"><string>background: #222;</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

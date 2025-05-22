@@ -116,11 +116,10 @@ class VideoUI(QWidget):
         self.btn_exit = QPushButton("退出")
         self.btn_exit.clicked.connect(self.exit_app)
 
-        # ----------------------QSlider控件---------------------------------
+        # ----------------------QSlider控件+QSpinBox控件---------------------------------
         self.slider_fps = QSlider(Qt.Horizontal)
         self.slider_fps.setRange(1, 200)
         self.slider_fps.setValue(30)
-        # ----------------------QSpinBox控件+QSpinBox控件----------------------------
         self.spin_fps = QSpinBox()
         self.spin_fps.setRange(1, 200)
         self.spin_fps.setValue(30)

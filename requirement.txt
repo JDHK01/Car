@@ -1,6 +1,8 @@
+# Requires Python ==3.9.9
 PyQt5
 opencv-python
 numpy
 matplotlib
 ipywidgets
 ipython
+jupyter notebook

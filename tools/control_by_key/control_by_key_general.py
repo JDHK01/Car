@@ -100,7 +100,7 @@ class CarController(QWidget):
         self.status_label.setText(self.get_status_text())
 
         # 模拟定时停止或输出状态
-        QTimer.singleShot(300, lambda: print(f"x:{self.x}; y:{self.y}; angle:{self.angle}"))
+        # QTimer.singleShot(300, lambda: print(f"x:{self.x}; y:{self.y}; angle:{self.angle}"))
         # QTimer.singleShot(300, stop_robot)
 
     def closeEvent(self, event):

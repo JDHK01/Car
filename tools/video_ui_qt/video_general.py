@@ -131,6 +131,7 @@ class VideoUI(QWidget):
         # -------------------QComboBox控件---------------------------------------
         self.combo_img = QComboBox()
         self.combo_img.addItems(["frame","processed"])
+        self.combo_img.setCurrentIndex(1)
         self.combo_img.currentIndexChanged.connect(self.update_image_display)
 
         # ---------------------布局-----------------------------------

@@ -51,6 +51,8 @@ class VideoLogic:
         self.playing = False
         self.locked_frame = None
         self.show_frame()
+        # 同理
+        self.start_play()
 
     def show_frame(self, frame=None):
         if frame is None:
@@ -76,6 +78,7 @@ class VideoLogic:
             self.set_image(self.ui.label_single0, self._last_imgs[0])
         else:
             self.ui.label_single.clear()
+            self.ui.label_single0.clear()
 
     def set_image(self, label, img):
         if img is None:
@@ -129,6 +132,7 @@ class VideoLogic:
 
     def clear_images(self):
         self.ui.label_single.clear()
+        self.ui.label_single0.clear()
 
     def save_snapshot(self):
         if self.locked_frame is not None:

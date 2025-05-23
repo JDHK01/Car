@@ -215,12 +215,15 @@ class VideoUI(QWidget):
             self.cap = None
             print("无法打开视频")
             return
+        # 准备修改为打开视频自动播放:修改按键状态 + 自动按键
         self.btn_close.setEnabled(True)# 开启关闭按键
         self.btn_play.setEnabled(True)# 开启播放按键
         self.btn_pause.setEnabled(False)# 关闭暂停按键
         self.playing = False# 设置播放状态
         self.locked_frame = None
         self.show_frame()
+
+        self.start_play()  # 自动播放
 
     def show_frame(self, frame=None):
         if frame is None:
@@ -252,6 +255,7 @@ class VideoUI(QWidget):
             self.set_image(self.label_single0, self._last_imgs[0])
         else:
             self.label_single.clear()
+            self.label_single0.clear()
 
     def set_image(self, label, img): #is_mask=False):
         if img is None:
@@ -309,6 +313,7 @@ class VideoUI(QWidget):
 
     def clear_images(self):
         self.label_single.clear()
+        self.label_single0.clear()
 
     def save_snapshot(self):
         if self.locked_frame is not None:

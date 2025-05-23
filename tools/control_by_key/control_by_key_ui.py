@@ -1,6 +1,6 @@
 # ui.py
 
-import sys
+import sys,time
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QPushButton,
     QVBoxLayout, QHBoxLayout, QLabel, QSlider, QSpinBox
@@ -95,7 +95,9 @@ class CarController(QWidget):
             rotate_right(self.rotate_speed)
 
         self.status_label.setText(self.get_status_text())
-        QTimer.singleShot(300, lambda: print(f"x:{self.x}; y:{self.y}; angle:{self.angle}"))
+        time.sleep(0.01)# 100Hz
+        # 模拟定时停止或输出状态
+        # QTimer.singleShot(300, lambda: print(f"x:{self.x}; y:{self.y}; angle:{self.angle}"))
 
     def closeEvent(self, event):
         stop_robot()

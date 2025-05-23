@@ -10,7 +10,7 @@ from PyQt5.QtGui import QImage, QPixmap
 # -----------------保留的函数处理接口--------------------
 def process_frame(frame):
     processed = frame.copy()
-    return frame, processed
+    return processed
 
 class VideoUI(QWidget):
     def __init__(self):
@@ -236,7 +236,7 @@ class VideoUI(QWidget):
 
         try:
             # --------------------------图像处理----------------------
-            frame ,processed = process_frame(frame)
+            processed = process_frame(frame)
         except Exception as e:
             print("process_frame error:", e)
             return

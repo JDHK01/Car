@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 读取 CSV 文件
-file_path = 'lidar_data2.csv'
+file_path = 'lidar_data.csv'
 df = pd.read_csv(file_path)
 
 # angles = np.rad2deg(df['angle'])

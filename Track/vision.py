@@ -18,6 +18,15 @@ import PID
 '''
 class HorizontalTracker:
     def __init__(self):
+        # 死区控制参数
+        self.dead_zone = 20  # 像素死区，减少抖动
+
+        # 控制标志
+        self.tracking_active = False
+
+        # PID控制器初始化
+        self.horizontal_pid = PID.PositionalPID(0.8, 0, 0.2)
+
         # 摄像头初始化
         self.camera = cv2.VideoCapture(0)
         self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -30,21 +39,14 @@ class HorizontalTracker:
         self.servo_center_angle = 90  # 舵机中心角度
         self.servo_min_angle = 0  # 舵机最小角度
         self.servo_max_angle = 180  # 舵机最大角度
-        self.current_servo_angle = self.servo_center_angle
-        # PID控制器初始化（水平方向）
-        self.horizontal_pid = PID.PositionalPID(0.8, 0, 0.2)
-
-        # 死区控制参数
-        self.dead_zone = 20  # 像素死区，减少抖动
-
-        # 控制标志
-        self.tracking_active = False
+        self.current_servo_angle = self.servo_center_angle  # 角度初始化
 
         print(f"水平跟踪系统初始化完成")
         print(f"图像宽度: {self.image_width}像素")
         print(f"图像中心: X={self.image_center_x}像素")
         print(f"舵机中心角度: {self.servo_center_angle}度")
 
+    # ========================开启跟踪=============================
     def set_target_position(self, target_x):
         """
         设置目标在图像中的X坐标位置
@@ -54,8 +56,9 @@ class HorizontalTracker:
         """
         # 边界检查
         target_x = max(0, min(self.image_width, target_x))
+        # target_x = target_x
 
-        # 计算与中心的偏差
+        # 误差计算
         error_x = target_x - self.image_center_x
 
         # 死区控制：只有偏差超过死区才进行控制
@@ -66,9 +69,11 @@ class HorizontalTracker:
                 图像当前位置
                 参数（没看）
             '''
+            # ----------------pid参数调节---------------------------
             self.horizontal_pid.SystemOutput = target_x
             self.horizontal_pid.SetStepSignal(self.image_center_x)  # 目标：图像中心
             self.horizontal_pid.SetInertiaTime(0.01, 0.05)
+
             pid_output = self.horizontal_pid.SystemOutput
 
             # 将PID输出转换为舵机角度调整量
@@ -86,17 +91,15 @@ class HorizontalTracker:
 
             # 调试信息
             print(f"目标位置: X={target_x}, 偏差: {error_x}, 舵机角度: {new_angle:.1f}°")
-
         else:
             print(f"目标位置: X={target_x}, 偏差: {error_x} (在死区内，无需调整)")
 
+    # =========调节 像素-> 角度 的映射关系================
     def calculate_servo_adjustment(self, error_x):
         """
         根据水平偏差计算舵机角度调整量
-
         Args:
             error_x (int): 水平方向偏差（像素）
-
         Returns:
             float: 舵机角度调整量（度）
         """
@@ -153,28 +156,34 @@ class HorizontalTracker:
     #     pwm_value = int(min_pwm + (angle / 180.0) * (max_pwm - min_pwm))
     #     return pwm_value
 
+
+    # 初始化舵机角度
     def reset_servo(self):
         """复位舵机到中心位置"""
         self.control_servo(self.servo_center_angle)
         self.current_servo_angle = self.servo_center_angle
         print("舵机已复位到中心位置")
 
+    # 设置跟踪状态全局变量
     def start_tracking(self):
         """开始跟踪"""
         self.tracking_active = True
         print("开始水平跟踪")
-
     def stop_tracking(self):
         """停止跟踪"""
         self.tracking_active = False
         print("停止水平跟踪")
 
+    # 获取每一帧
     def get_camera_frame(self):
         """获取摄像头画面"""
         ret, frame = self.camera.read()
         if ret:
             return frame
-        return None
+        else:
+            print("没有检测到内容")
+            return None
+
 
     def draw_tracking_info(self, frame, target_x=None):
         """

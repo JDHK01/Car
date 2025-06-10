@@ -70,22 +70,34 @@ class MovementRecord:
 
 class EnhancedTracker:
     def __init__(self):
+        # =========参数调节设置================
+        '''
+            死区宽度设置；
+            是否跟踪到的标识位
+            PID参数
+            映射数值：作用类似于PID参数的P
+            小车运动的参数调节
+        '''
         # 死区控制参数
         self.dead_zone_horizontal = 20  # 水平像素死区
         self.dead_zone_vertical = 15  # 垂直像素死区
-
         # 控制标志
         self.tracking_active = False
-
         # PID控制器初始化
         self.horizontal_pid = PID.PositionalPID(0.8, 0, 0.2)
         self.vertical_pid = PID.PositionalPID(0.6, 0, 0.15)  # 垂直方向稍微温和一些
+        # PID输出到舵机角度的映射值
+        self.horizontal_pid_scale = 0.5
+        self.vertical_pid_scale = 0.03  # 垂直方向更精细
+        # 小车运动参数
+        self.robot_rotation_threshold = 45  # 舵机角度超过此值时开始旋转小车
+        self.robot_speed = 30  # 小车运动速度
+        self.rotation_time_per_degree = 0.02  # 每度旋转需要的时间（需要根据实际调试）
 
         # 摄像头初始化
         self.camera = cv2.VideoCapture(0)
         self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-
         # 图像参数
         self.image_width = 640
         self.image_height = 480
@@ -99,19 +111,10 @@ class EnhancedTracker:
         self.current_horizontal_angle = self.horizontal_servo_center
 
         # 垂直舵机参数（舵机2）
-        self.vertical_servo_center = 90
-        self.vertical_servo_min = 30  # 限制垂直范围，避免撞到地面
-        self.vertical_servo_max = 150
+        self.vertical_servo_center = 0
+        self.vertical_servo_min = 0  # 限制垂直范围，避免撞到地面
+        self.vertical_servo_max = 90
         self.current_vertical_angle = self.vertical_servo_center
-
-        # PID输出到舵机角度的映射值
-        self.horizontal_pid_scale = 0.1
-        self.vertical_pid_scale = 0.08  # 垂直方向更精细
-
-        # 小车运动参数
-        self.robot_rotation_threshold = 45  # 舵机角度超过此值时开始旋转小车
-        self.robot_speed = 30  # 小车运动速度
-        self.rotation_time_per_degree = 0.02  # 每度旋转需要的时间（需要根据实际调试）
 
         # 运动记录
         self.movement_recorder = MovementRecord()
@@ -145,10 +148,8 @@ class EnhancedTracker:
 
         # 水平方向控制
         self._control_horizontal(target_x, error_x)
-
         # 垂直方向控制
         self._control_vertical(target_y, error_y)
-
         # 检查是否需要旋转小车
         self._check_robot_rotation()
 
@@ -366,13 +367,11 @@ def main():
     try:
         # 复位舵机
         tracker.reset_servos()
+
         time.sleep(1)
 
         # 开始跟踪
         tracker.start_tracking()
-
-        print("\n===== 增强视频识别跟踪 =====")
-        print("按 Ctrl+C 停止跟踪并返回原点")
 
         frame_count = 0
         while tracker.tracking_active:
@@ -398,7 +397,7 @@ def main():
                     if frame_count % 30 == 0:  # 每30帧提示一次
                         print("未检测到目标")
 
-                time.sleep(0.1)  # 控制帧率
+                time.sleep(0.03)  # 控制帧率
 
     except KeyboardInterrupt:
         print("\n程序被用户中断，准备返回原点...")

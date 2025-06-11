@@ -11,7 +11,6 @@ from sklearn.cluster import DBSCAN, KMeans
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial.distance import cdist
 
-
 class LidarClusterDetector:
     def __init__(self, distance_threshold=0.3, min_car_width=0.1, max_car_width=1.0):
         """

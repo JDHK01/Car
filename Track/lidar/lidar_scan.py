@@ -11,14 +11,7 @@ import math
 
 class CarDetector:
     def __init__(self, distance_threshold=0.3, min_car_width=0.08, max_car_width=0.8):
-        """
-        初始化小车检测器
-
-        Args:
-            distance_threshold: 相邻点距离跳变阈值(米)
-            min_car_width: 小车最小宽度(米)
-            max_car_width: 小车最大宽度(米)
-        """
+        """"""
         self.distance_threshold = distance_threshold
         self.min_car_width = min_car_width
         self.max_car_width = max_car_width

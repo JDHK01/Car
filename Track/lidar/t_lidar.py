@@ -8,7 +8,9 @@ plt.rcParams['font.family'] = ['Arial Unicode MS']
 plt.rcParams['axes.unicode_minus'] = False
 class CarDetector:
     def __init__(self, distance_threshold=0.3, min_car_width=0.08, max_car_width=0.8):
+
         """
+        =====================功能展示，不做实体============================
         初始化小车检测器
 
         Args:
@@ -327,7 +329,7 @@ def main():
     主函数 - 从CSV文件检测小车
     """
     # CSV文件路径 - 请根据实际情况修改
-    csv_file_path = 'lidar_data.csv'
+    csv_file_path = 'lidar_data/lidar_data0.csv'
 
     # 处理数据并检测小车
     try:

@@ -48,6 +48,7 @@ class VideoUI(QWidget):
         # 图像选择
         self.combo_img = QComboBox()
         self.combo_img.addItems(["frame", "processed"])
+        self.combo_img.setCurrentIndex(1)
 
         # 逻辑处理对象
         self.logic = VideoLogic(self)

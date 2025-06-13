@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QFileDialog, QInputDialog, QApplication
 def process_frame(frame):
     # 这里可以自定义处理逻辑
     processed = frame.copy()
-    return frame, processed
+    return processed
 
 class VideoLogic:
     def __init__(self, ui):
@@ -63,7 +63,7 @@ class VideoLogic:
                 return
             self.locked_frame = frame.copy()
         try:
-            frame, processed = process_frame(frame)
+            processed = process_frame(frame)
         except Exception as e:
             print("process_frame error:", e)
             return

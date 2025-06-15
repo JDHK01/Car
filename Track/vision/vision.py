@@ -20,7 +20,7 @@ class MovementRecord:
     """运动记录类，用于记录和还原小车运动"""
 
     def __init__(self):
-        self.movements = deque(maxlen=100)  # 最多记录100个动作
+        self.movements = deque(maxlen=99999)  # 记录无限多
 
     def record_rotation(self, direction, speed, duration):
         """记录旋转动作"""
@@ -72,27 +72,27 @@ class EnhancedTracker:
     def __init__(self):
         # =========参数调节设置================
         '''
-            死区宽度设置；
+            死区宽度设置；姑且关闭，多抖动没事
             是否跟踪到的标识位
-            PID参数
-            映射数值：作用类似于PID参数的P
+            PID参数:明天再根据真正的机器去调
+            映射数值：作用类似于PID参数的P，我的思路是调节精细一些，不需要过于强势
             小车运动的参数调节
         '''
         # 死区控制参数
-        self.dead_zone_horizontal = 20  # 水平像素死区
-        self.dead_zone_vertical = 15  # 垂直像素死区
+        self.dead_zone_horizontal = 0  # 水平像素死区
+        self.dead_zone_vertical = 0  # 垂直像素死区
         # 控制标志
         self.tracking_active = False
         # PID控制器初始化
         self.horizontal_pid = PID.PositionalPID(0.8, 0, 0.2)
         self.vertical_pid = PID.PositionalPID(0.6, 0, 0.15)  # 垂直方向稍微温和一些
         # PID输出到舵机角度的映射值
-        self.horizontal_pid_scale = 0.5
-        self.vertical_pid_scale = 0.03  # 垂直方向更精细
+        self.horizontal_pid_scale = 0.05
+        self.vertical_pid_scale = 0.01  # 垂直方向更精细
         # 小车运动参数
         self.robot_rotation_threshold = 45  # 舵机角度超过此值时开始旋转小车
-        self.robot_speed = 30  # 小车运动速度
-        self.rotation_time_per_degree = 0.02  # 每度旋转需要的时间（需要根据实际调试）
+        self.robot_speed = 10  # 小车运动速度
+        self.rotation_time_per_degree = 0.05  # 每度旋转需要的时间（需要根据实际调试）
 
         # 摄像头初始化
         self.camera = cv2.VideoCapture(0)
@@ -112,7 +112,7 @@ class EnhancedTracker:
 
         # 垂直舵机参数（舵机2）
         self.vertical_servo_center = 0
-        self.vertical_servo_min = 0  # 限制垂直范围，避免撞到地面
+        self.vertical_servo_min = 0
         self.vertical_servo_max = 90
         self.current_vertical_angle = self.vertical_servo_center
 
@@ -156,7 +156,7 @@ class EnhancedTracker:
     def _control_horizontal(self, target_x, error_x):
         """水平方向控制"""
         if abs(error_x) > self.dead_zone_horizontal:
-            # PID控制计算
+            # PID控制计算（没有用到）
             self.horizontal_pid.SystemOutput = target_x
             self.horizontal_pid.SetStepSignal(self.image_center_x)
             self.horizontal_pid.SetInertiaTime(0.01, 0.05)
@@ -165,7 +165,7 @@ class EnhancedTracker:
             angle_adjustment = -error_x * self.horizontal_pid_scale
 
             # 限制单次调整幅度
-            max_adjustment = 8
+            max_adjustment = 10
             angle_adjustment = max(-max_adjustment, min(max_adjustment, angle_adjustment))
 
             # 更新舵机角度
@@ -190,7 +190,7 @@ class EnhancedTracker:
             angle_adjustment = error_y * self.vertical_pid_scale  # 不加负号，因为Y轴方向
 
             # 限制单次调整幅度
-            max_adjustment = 6
+            max_adjustment = 5
             angle_adjustment = max(-max_adjustment, min(max_adjustment, angle_adjustment))
 
             # 更新舵机角度
@@ -380,7 +380,7 @@ def main():
                 frame_count += 1
 
                 # 使用YOLO检测目标，这里需要修改detect_frame方法返回x,y坐标
-                detection_result = yolo_detector.detect_frame(frame, conf_thres=0.4, iou_thres=0.5)
+                detection_result = yolo_detector.detect_frame(frame, conf_thres=0.3, iou_thres=0.5)
 
                 if detection_result is not None:
                     # 假设detection_result返回(target_x, target_y)

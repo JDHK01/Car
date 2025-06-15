@@ -12,7 +12,7 @@ class LidarClusterDetector:
     def __init__(self, distance_threshold=0.3, min_car_width=0.1, max_car_width=1.0):
         """
         基于聚类的雷达检测器
-
+        =========================功能展示：不做实体============================
         Args:
             distance_threshold: 相邻点距离跳变阈值(米)
             min_car_width: 小车最小宽度(米)
@@ -590,7 +590,7 @@ def main():
     主函数 - 从CSV文件进行基于聚类的检测
     """
     # CSV文件路径 - 请根据实际情况修改
-    csv_file_path = '/mnt/lidar_data.csv'
+    csv_file_path = 'lidar_data/lidar_data2.csv'
 
     try:
         print("=== 基于聚类的雷达数据分析 ===")
@@ -692,7 +692,7 @@ def interactive_test():
         if choice == '1':
             csv_path = input("请输入CSV文件路径 (直接回车使用默认路径): ").strip()
             if not csv_path:
-                csv_path = 'lidar_data2.csv'
+                csv_path = 'lidar_data/lidar_data2.csv'
 
             # 临时修改路径并运行
             global csv_file_path

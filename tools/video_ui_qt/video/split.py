@@ -2,9 +2,9 @@ import cv2
 import os
 
 # 输入视频路径
-video_path = 'traffic1.avi'  # 替换为你的视频文件路径
+video_path = '1.mp4'  # 替换为你的视频文件路径
 # 输出帧图像保存路径
-output_dir = 'frames'
+output_dir = 'frames0'
 os.makedirs(output_dir, exist_ok=True)
 
 # 打开视频文件

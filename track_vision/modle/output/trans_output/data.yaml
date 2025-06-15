@@ -1,0 +1,7 @@
+train: C:\Users\Ozone\Desktop\output\trans_output\train\images
+val: C:\Users\Ozone\Desktop\output\trans_output\valid\images
+test: C:\Users\Ozone\Desktop\output\trans_output\test\images
+nc: 2
+names:
+  0: car
+  1: paper

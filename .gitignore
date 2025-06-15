@@ -35,6 +35,6 @@ Thumbs.db
 *.swo
 
 # 图片和视频
-picture/
-video/
-frame/
+#picture/
+#video/
+#frame/
